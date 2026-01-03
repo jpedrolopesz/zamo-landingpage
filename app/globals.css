@@ -3,8 +3,8 @@
 :root {
     --background: #ffffff;
     --foreground: #171717;
-    --dark: var(--dark);
-    --light: var(--light);
+    --dark: #171717;
+    --light: #ffffff;
     --light2: #f0ece5;
     --accent-1: #e5d9f6;
     --accent-2: #ffd2f3;
@@ -15,13 +15,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-@theme inline {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    --font-sans: var(--font-geist-sans);
-    --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -35,6 +28,7 @@ body {
     background: var(--background);
     color: var(--foreground);
     font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
 }
 
 h1 {
@@ -44,23 +38,24 @@ h1 {
 
 p {
     font-size: 1.1rem;
-    line-height: 500;
+    line-height: 1.5;
 }
 
 span {
     text-transform: uppercase;
-    font-family: "DM Mono";
+    font-family: "DM Mono", monospace;
     font-size: 0.75rem;
-    line-height: 500;
+    line-height: 1.5;
 }
 
-nav {
+.nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 2rem;
     position: fixed;
-    z-index: 2;
+    z-index: 100;
+    width: 100%;
 }
 
 .logo span,
@@ -68,15 +63,24 @@ nav {
     font-size: 0.8rem;
     padding: 0.75rem;
     border-radius: 0.25rem;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .logo span {
     background-color: var(--dark);
     color: var(--light);
 }
+
 .menu-btn span {
     background-color: var(--light2);
     color: var(--dark);
+}
+
+.menu-btn span:hover {
+    background-color: var(--dark);
+    color: var(--light);
 }
 
 section {
@@ -112,6 +116,14 @@ section {
     gap: 1rem;
 }
 
+@media (max-width: 768px) {
+    .hero-cards {
+        width: 90%;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
 .hero-cards .card {
     flex: 1;
     position: relative;
@@ -138,10 +150,12 @@ section {
     transform-origin: top right;
     z-index: 2;
 }
+
 .hero-cards .card#hero-card-2 {
     background-color: var(--accent-2);
     z-index: 1;
 }
+
 .hero-cards .card#hero-card-3 {
     background-color: var(--accent-3);
     transform-origin: top left;
@@ -150,12 +164,14 @@ section {
 
 .services {
     padding: 8rem 2rem;
+    background-color: var(--light);
 }
+
 .services-header {
     position: relative;
     width: 100%;
     text-align: center;
-    transform: translateY (400%);
+    transform: translateY(400%);
     will-change: transform;
 }
 
@@ -168,7 +184,7 @@ section {
     display: flex;
     justify-content: center;
     z-index: -1;
-    background-color: var(--lingh);
+    background-color: var(--light);
 }
 
 .cards-container {
@@ -179,6 +195,21 @@ section {
     justify-content: center;
     align-items: center;
     gap: 4rem;
+}
+
+@media (max-width: 1024px) {
+    .cards-container {
+        width: 90%;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        flex-direction: column;
+        gap: 1rem;
+        width: 95%;
+    }
 }
 
 .cards-container .card {
@@ -211,12 +242,14 @@ section {
 }
 
 #card-1 .card-wrapper {
-    animation-delay: 0;
+    animation-delay: 0s;
 }
+
 #card-2 .card-wrapper {
     animation-delay: 0.25s;
 }
-#card-3.card-wrapper {
+
+#card-3 .card-wrapper {
     animation-delay: 0.5s;
 }
 
@@ -248,9 +281,11 @@ section {
 #card-1 .flip-card-front {
     background-color: var(--accent-1);
 }
+
 #card-2 .flip-card-front {
     background-color: var(--accent-2);
 }
+
 #card-3 .flip-card-front {
     background-color: var(--accent-3);
 }
@@ -281,21 +316,20 @@ section {
     font-size: 1rem;
     background-color: var(--light2);
     border-radius: 0.25rem;
+    padding: 0.5rem;
 }
 
 #card-1 {
-    transform: translateX(100%) translateY(-100%) rotate(-5deg) scale (0.25);
+    transform: translateX(100%) translateY(-100%) rotate(-5deg) scale(0.25);
     z-index: 2;
 }
+
 #card-2 {
-    transform: translateX(0%) translateY(-100%) rotate(0deg) scale (0.25);
+    transform: translateX(0%) translateY(-100%) rotate(0deg) scale(0.25);
     z-index: 1;
 }
-#card-3 {
-    transform: translateX(-100%) translateY(-100%) rotate(5deg) scale (0.25);
-    z-index: 0;
-}
 
-.cards-container .card {
-    opacity: 0;
+#card-3 {
+    transform: translateX(-100%) translateY(-100%) rotate(5deg) scale(0.25);
+    z-index: 0;
 }
