@@ -97,6 +97,7 @@ export default function Home() {
         );
       },
     });
+    gsap.set(".cards", { autoAlpha: 0 });
 
     // ====== SERVICES PIN ======
     const servicesPin = ScrollTrigger.create({
@@ -106,6 +107,16 @@ export default function Home() {
       pin: true,
       pinSpacing: true,
       markers: false, // Mude para true para debug
+    });
+
+    const cardsVisibility = ScrollTrigger.create({
+      trigger: ".services",
+      start: "top top",
+      end: `+=${window.innerHeight * 4}`,
+      onEnter: () => gsap.set(".cards", { autoAlpha: 1 }),
+      onEnterBack: () => gsap.set(".cards", { autoAlpha: 1 }),
+      onLeave: () => gsap.set(".cards", { autoAlpha: 0 }),
+      onLeaveBack: () => gsap.set(".cards", { autoAlpha: 0 }),
     });
 
     // ====== CARDS ANIMATION ======
@@ -131,6 +142,8 @@ export default function Home() {
         });
 
         // Animar cards
+        //
+        //
         ["#card-1", "#card-2", "#card-3"].forEach((cardId, index) => {
           const card = document.querySelector(cardId);
           const innerCard = document.querySelector(
@@ -230,6 +243,8 @@ export default function Home() {
     return () => {
       heroTrigger.kill();
       servicesPin.kill();
+      cardsVisibility.kill();
+
       cardsAnimation.kill();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       gsap.ticker.remove((time) => lenis.raf(time * 1000));

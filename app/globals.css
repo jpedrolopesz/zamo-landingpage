@@ -173,6 +173,7 @@ section {
     text-align: center;
     transform: translateY(400%);
     will-change: transform;
+    z-index: 1;
 }
 
 .cards {
@@ -183,7 +184,7 @@ section {
     height: 100svh;
     display: flex;
     justify-content: center;
-    z-index: -1;
+    z-index: 0;
     background-color: var(--light);
 }
 
