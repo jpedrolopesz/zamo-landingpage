@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="[ZAMO - FLASHCARDS]: flashcards com repetição espaçada + roadmap com IA + missões. Estudo de verdade, com progresso real."
+        />
+        <title>
+            [ZAMO - FLASHCARDS] — Estudo de verdade com repetição espaçada
+        </title>
+
+        <style>
+            :root {
+                --bg: #0b0f19;
+                --card: #0f172a;
+                --text: #e5e7eb;
+                --muted: #a1a1aa;
+                --line: rgba(255, 255, 255, 0.1);
+                --accent: #7c3aed; /* roxo moderno */
+                --accent2: #22c55e; /* verde para confiança */
+                --shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+                --radius: 16px;
+                --max: 1080px;
+            }
+
+            @media (prefers-color-scheme: light) {
+                :root {
+                    --bg: #ffffff;
+                    --card: #f8fafc;
+                    --text: #0b1220;
+                    --muted: #4b5563;
+                    --line: rgba(2, 6, 23, 0.1);
+                    --shadow: 0 10px 24px rgba(2, 6, 23, 0.1);
+                }
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+                font-family:
+                    ui-sans-serif,
+                    system-ui,
+                    -apple-system,
+                    Segoe UI,
+                    Roboto,
+                    Helvetica,
+                    Arial,
+                    "Apple Color Emoji",
+                    "Segoe UI Emoji";
+                background: var(--bg);
+                color: var(--text);
+                line-height: 1.45;
+                letter-spacing: 0.2px;
+            }
+
+            a {
+                color: inherit;
+            }
+            .wrap {
+                max-width: var(--max);
+                margin: 0 auto;
+                padding: 22px 16px 64px;
+            }
+            .topbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 10px 0 18px;
+            }
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                text-decoration: none;
+                font-weight: 750;
+            }
+            .brand-badge {
+                width: 34px;
+                height: 34px;
+                border-radius: 12px;
+                background: linear-gradient(135deg, var(--accent), #2563eb);
+                box-shadow: var(--shadow);
+                display: grid;
+                place-items: center;
+                font-size: 14px;
+            }
+            .pill {
+                font-size: 12px;
+                color: var(--muted);
+                border: 1px solid var(--line);
+                padding: 6px 10px;
+                border-radius: 999px;
+                white-space: nowrap;
+            }
+
+            /* Layout */
+            section {
+                padding: 34px 0;
+                border-top: 1px solid var(--line);
+            }
+            section:first-of-type {
+                border-top: 0;
+                padding-top: 10px;
+            }
+            .grid {
+                display: grid;
+                gap: 14px;
+            }
+            @media (min-width: 900px) {
+                .grid.hero {
+                    grid-template-columns: 1.05fr 0.95fr;
+                    gap: 22px;
+                }
+                .grid.features {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+                .grid.steps {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+                .grid.final {
+                    grid-template-columns: 1.2fr 0.8fr;
+                }
+            }
+
+            /* Typo */
+            h1 {
+                font-size: clamp(28px, 4.4vw, 44px);
+                line-height: 1.05;
+                margin: 0 0 12px;
+                letter-spacing: -0.5px;
+            }
+            h2 {
+                font-size: clamp(20px, 2.2vw, 28px);
+                margin: 0 0 12px;
+                letter-spacing: -0.2px;
+            }
+            h3 {
+                font-size: 15px;
+                margin: 0 0 6px;
+            }
+            p {
+                margin: 0 0 12px;
+                color: var(--muted);
+                max-width: 68ch;
+            }
+            .lead {
+                font-size: 16px;
+                color: var(--text);
+                opacity: 0.92;
+                max-width: 62ch;
+            }
+            .small {
+                font-size: 12px;
+                color: var(--muted);
+            }
+            .trust {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                color: var(--muted);
+                font-size: 12px;
+            }
+            .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 99px;
+                background: var(--accent2);
+                display: inline-block;
+            }
+
+            /* Cards */
+            .card {
+                background: var(--card);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                padding: 16px;
+                box-shadow: var(--shadow);
+            }
+            .card.tight {
+                padding: 14px;
+            }
+            .kicker {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 12px;
+                color: var(--muted);
+                border: 1px solid var(--line);
+                padding: 6px 10px;
+                border-radius: 999px;
+                margin-bottom: 12px;
+            }
+            .k-spot {
+                width: 10px;
+                height: 10px;
+                border-radius: 99px;
+                background: linear-gradient(135deg, var(--accent), #2563eb);
+                display: inline-block;
+            }
+
+            /* Buttons */
+            .actions {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                margin: 16px 0 10px;
+            }
+            .btn {
+                appearance: none;
+                border: 1px solid var(--line);
+                background: transparent;
+                color: var(--text);
+                padding: 12px 14px;
+                border-radius: 14px;
+                font-weight: 700;
+                cursor: pointer;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                min-height: 44px; /* mobile */
+            }
+            .btn:focus {
+                outline: 3px solid rgba(124, 58, 237, 0.35);
+                outline-offset: 2px;
+            }
+            .btn.primary {
+                background: linear-gradient(135deg, var(--accent), #2563eb);
+                border-color: transparent;
+                box-shadow: var(--shadow);
+            }
+            .btn.primary[aria-busy="true"] {
+                opacity: 0.85;
+                cursor: progress;
+            }
+            .btn.secondary {
+                background: rgba(255, 255, 255, 0.03);
+            }
+            .btn .sub {
+                display: block;
+                font-size: 12px;
+                font-weight: 600;
+                opacity: 0.85;
+            }
+            .btn .label {
+                display: flex;
+                flex-direction: column;
+                line-height: 1.05;
+            }
+            .btn .icon {
+                width: 18px;
+                height: 18px;
+                display: inline-block;
+            }
+
+            /* Lists */
+            ul {
+                padding-left: 18px;
+                margin: 10px 0 0;
+            }
+            li {
+                margin: 8px 0;
+                color: var(--muted);
+            }
+            .bullets {
+                margin-top: 8px;
+            }
+            .bullets li {
+                color: var(--text);
+                opacity: 0.9;
+            }
+            .bullets li span {
+                color: var(--muted);
+            }
+
+            /* Video placeholder */
+            .video-shell {
+                border-radius: var(--radius);
+                overflow: hidden;
+                border: 1px solid var(--line);
+                background:
+                    radial-gradient(
+                        1200px 400px at 20% 20%,
+                        rgba(124, 58, 237, 0.28),
+                        transparent 50%
+                    ),
+                    radial-gradient(
+                        900px 400px at 80% 0%,
+                        rgba(37, 99, 235, 0.22),
+                        transparent 55%
+                    ),
+                    rgba(255, 255, 255, 0.02);
+                box-shadow: var(--shadow);
+            }
+            .video-inner {
+                padding: 14px;
+            }
+            .video-box {
+                position: relative;
+                aspect-ratio: 16 / 9;
+                border-radius: 14px;
+                overflow: hidden;
+                border: 1px solid var(--line);
+                background:
+                    linear-gradient(
+                        180deg,
+                        rgba(255, 255, 255, 0.05),
+                        rgba(255, 255, 255, 0)
+                    ),
+                    rgba(0, 0, 0, 0.2);
+                display: grid;
+                place-items: center;
+            }
+            .play {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 12px;
+                border-radius: 999px;
+                border: 1px solid var(--line);
+                background: rgba(0, 0, 0, 0.18);
+                color: var(--text);
+                cursor: pointer;
+                font-weight: 700;
+                min-height: 44px;
+            }
+            .play:focus {
+                outline: 3px solid rgba(124, 58, 237, 0.35);
+                outline-offset: 2px;
+            }
+            .video-note {
+                margin: 10px 2px 0;
+                font-size: 12px;
+                color: var(--muted);
+            }
+            .sr-only {
+                position: absolute !important;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
+
+            /* FAQ */
+            details {
+                border: 1px solid var(--line);
+                border-radius: 14px;
+                padding: 12px 12px;
+                background: rgba(255, 255, 255, 0.02);
+            }
+            details + details {
+                margin-top: 10px;
+            }
+            summary {
+                cursor: pointer;
+                font-weight: 750;
+                color: var(--text);
+                list-style: none;
+            }
+            summary::-webkit-details-marker {
+                display: none;
+            }
+            .faq-p {
+                margin-top: 8px;
+                margin-bottom: 0;
+                color: var(--muted);
+            }
+            .fineprint {
+                margin-top: 12px;
+                font-size: 12px;
+                color: var(--muted);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="wrap">
+            <div class="topbar">
+                <a class="brand" href="#top">
+                    <span class="brand-badge" aria-hidden="true">Z</span>
+                    <span>[ZAMO - FLASHCARDS]</span>
+                </a>
+                <span class="pill"
+                    >Plataforma: <strong>[iOS]</strong> •
+                    <span class="small">versão inicial</span></span
+                >
+            </div>
+
+            <main id="top">
+                <!-- 1) HERO (com vídeo) -->
+                <section aria-label="Hero">
+                    <div class="grid hero">
+                        <div>
+                            <span class="kicker"
+                                ><span class="k-spot" aria-hidden="true"></span>
+                                feito para estudo de verdade</span
+                            >
+                            <h1>Memorize melhor. Estude com consistência.</h1>
+                            <p class="lead">
+                                Flashcards com repetição espaçada + um
+                                <strong>roadmap guiado</strong> para você criar
+                                material, revisar na hora certa e ver
+                                <strong>progresso real</strong> — sem
+                                gamificação que atrapalha.
+                            </p>
+
+                            <div
+                                class="actions"
+                                role="group"
+                                aria-label="Ações principais"
+                            >
+                                <a
+                                    class="btn primary"
+                                    href="[NAO TENHO AINDA]"
+                                    data-cta="primary"
+                                    aria-busy="false"
+                                >
+                                    <span class="icon" aria-hidden="true"
+                                        >⬇️</span
+                                    >
+                                    <span class="label">
+                                        <span>[BAIXAR]</span>
+                                        <span class="sub"
+                                            >Comece em 2 minutos</span
+                                        >
+                                    </span>
+                                </a>
+
+                                <a
+                                    class="btn secondary"
+                                    href="#porque-funciona"
+                                    data-cta="secondary"
+                                >
+                                    <span class="icon" aria-hidden="true"
+                                        >▶️</span
+                                    >
+                                    <span class="label">
+                                        <span>Ver como funciona</span>
+                                        <span class="sub"
+                                            >Sem cadastro agora</span
+                                        >
+                                    </span>
+                                </a>
+                            </div>
+
+                            <ul class="bullets">
+                                <li>
+                                    <strong>Revisões no tempo certo</strong>
+                                    <span
+                                        >para consolidar memória sem
+                                        “maratonar”</span
+                                    >
+                                </li>
+                                <li>
+                                    <strong>IA para organizar o caminho</strong>
+                                    <span
+                                        >e transformar conteúdo em plano de
+                                        estudo</span
+                                    >
+                                </li>
+                                <li>
+                                    <strong>Métricas claras</strong>
+                                    <span
+                                        >para consistência, evolução e pontos
+                                        fracos</span
+                                    >
+                                </li>
+                            </ul>
+
+                            <div style="height: 12px"></div>
+                            <div class="trust">
+                                <span class="dot" aria-hidden="true"></span>
+                                Construído por
+                                <strong>João Zamonelo</strong> para autodidatas
+                                que querem aprender de verdade.
+                            </div>
+                        </div>
+
+                        <div class="video-shell">
+                            <div class="video-inner">
+                                <div class="video-box" id="videoBox">
+                                    <!--
+                  Performance:
+                  - Use um poster leve (jpg/webp comprimido) e carregue o vídeo só quando clicar.
+                  - Se for YouTube/Vimeo, use "lite" embed ou carregamento sob demanda.
+                -->
+                                    <button
+                                        class="play"
+                                        id="playBtn"
+                                        type="button"
+                                    >
+                                        <span aria-hidden="true">▶</span>
+                                        <span>Assistir demo (15–25s)</span>
+                                    </button>
+
+                                    <span
+                                        class="sr-only"
+                                        id="videoStatus"
+                                        aria-live="polite"
+                                    ></span>
+                                </div>
+                                <p class="video-note">
+                                    No vídeo: criação de um roadmap em 30s → 1
+                                    missão do dia → revisão automática → gráfico
+                                    de consistência.
+                                    <br />
+                                    <span class="small"
+                                        >Dica de performance: poster leve +
+                                        lazy-load do player.</span
+                                    >
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2) POR QUE FUNCIONA -->
+                <section id="porque-funciona" aria-label="Por que funciona">
+                    <h2>Por que a repetição espaçada tende a funcionar</h2>
+                    <p>
+                        Seu cérebro esquece naturalmente. A repetição espaçada
+                        ajuda porque você revisa
+                        <strong>antes de esquecer completamente</strong>, no
+                        intervalo certo — e isso tende a fortalecer a lembrança
+                        com menos tempo total de estudo.
+                    </p>
+                    <p class="small">
+                        Baseado em práticas populares desde os trabalhos de
+                        Piotr Woźniak / SuperMemo (década de 1980), adaptadas
+                        para o dia a dia.
+                    </p>
+
+                    <div class="grid steps" style="margin-top: 14px">
+                        <div class="card tight">
+                            <h3>1) Você estuda “o essencial”</h3>
+                            <p>
+                                Crie ou importe cards. Foque em conceitos,
+                                exemplos e dúvidas reais — sem enfeite.
+                            </p>
+                        </div>
+                        <div class="card tight">
+                            <h3>2) O app agenda as revisões</h3>
+                            <p>
+                                Se você acerta, o intervalo aumenta. Se erra,
+                                volta mais cedo. Nada de chute: é adaptação por
+                                desempenho.
+                            </p>
+                        </div>
+                        <div class="card tight">
+                            <h3>3) Você mede consistência</h3>
+                            <p>
+                                Você enxerga o que está firme, o que está fraco
+                                e o que precisa de reforço — com sinais claros,
+                                não “moedinhas”.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 14px">
+                        <h3>
+                            Como o [ZAMO - FLASHCARDS] aplica isso no dia a dia
+                        </h3>
+                        <ul>
+                            <li>
+                                <strong>Abra o app</strong> e veja sua “missão
+                                do dia”: revisão + novos cards na dose certa.
+                            </li>
+                            <li>
+                                <strong>Responda rápido</strong> (acerto/erro) —
+                                o sistema ajusta os intervalos sem você mexer em
+                                planilha.
+                            </li>
+                            <li>
+                                <strong>Feche com clareza</strong>: você sai
+                                sabendo o que evoluiu e o que ainda precisa de
+                                base.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 3) RECURSOS -->
+                <section aria-label="Recursos">
+                    <h2>O que você tem no app</h2>
+                    <p>
+                        Recursos pensados para autodidatas: organização,
+                        execução e feedback objetivo. Sem distrações.
+                    </p>
+
+                    <div class="grid features" style="margin-top: 14px">
+                        <div class="card">
+                            <h3>Flashcards + agenda inteligente</h3>
+                            <p>
+                                Revisões automáticas com repetição espaçada.
+                                Você só faz o que importa hoje — o resto fica
+                                agendado.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h3>IA para criar roadmap de estudo</h3>
+                            <p>
+                                Você diz o objetivo (ex.: <em>[assunto]</em>) e
+                                a IA sugere um caminho: tópicos, sequência e
+                                checkpoints.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h3>Missões com desafios variados</h3>
+                            <p>
+                                Missões mudam o tipo de esforço: revisão,
+                                aplicação, comparação, perguntas “pegadinhas” e
+                                lacunas.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h3>Estruturas para criar seu material</h3>
+                            <p>
+                                Modelos de cards (definição, exemplo,
+                                contraexemplo, “por quê”, “como usar”) para você
+                                estudar pesquisando por conta própria.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h3>Métricas de progresso real</h3>
+                            <p>
+                                Consistência, evolução por tema e “estado real”
+                                do que você domina — para ajustar sua semana sem
+                                adivinhação.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h3>Personalização por acerto/erro</h3>
+                            <p>
+                                O app aprende com seu desempenho: aumenta
+                                reforço onde você erra e libera espaço onde você
+                                já está sólido.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin-top: 14px">
+                        <h3>Micro-história (vida real, sem exageros)</h3>
+                        <p>
+                            Você quer aprender
+                            <strong
+                                >[programação/idioma/conteúdo do
+                                concurso]</strong
+                            >. No primeiro dia, a IA monta um roadmap simples
+                            (tópicos + ordem). Você cria cards com as estruturas
+                            prontas e faz 1 missão por dia.
+                        </p>
+                        <p style="margin-bottom: 0">
+                            Em 7 dias, você
+                            <strong>tende a perceber</strong> duas coisas: (1) o
+                            que realmente ficou na memória (e o que não ficou),
+                            (2) onde vale aprofundar — porque as métricas
+                            mostram padrões de erro, não “sensação”.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 4) CTA FINAL (conversão) -->
+                <section aria-label="Chamada final">
+                    <div class="grid final">
+                        <div>
+                            <h2>
+                                Estudo sério, do seu jeito — com suporte do
+                                método
+                            </h2>
+                            <p class="lead">
+                                Se você quer parar de “recomeçar do zero”, o
+                                [ZAMO - FLASHCARDS] foi feito para construir
+                                base, manter consistência e evoluir com clareza.
+                            </p>
+
+                            <div class="actions" style="margin-top: 14px">
+                                <a
+                                    class="btn primary"
+                                    href="[NAO TENHO AINDA]"
+                                    data-cta="final"
+                                    aria-busy="false"
+                                >
+                                    <span class="icon" aria-hidden="true"
+                                        >✅</span
+                                    >
+                                    <span class="label">
+                                        <span>[BAIXAR]</span>
+                                        <span class="sub"
+                                            >Disponível para [iOS]</span
+                                        >
+                                    </span>
+                                </a>
+                            </div>
+
+                            <ul class="bullets">
+                                <li>
+                                    <strong>Sem blá-blá-blá</strong>
+                                    <span
+                                        >interface direta para estudar, não para
+                                        “jogar”.</span
+                                    >
+                                </li>
+                                <li>
+                                    <strong>Comece em 2 minutos</strong>
+                                    <span
+                                        >importe ou crie um set e faça a
+                                        primeira missão.</span
+                                    >
+                                </li>
+                                <li>
+                                    <strong>Você controla o conteúdo</strong>
+                                    <span
+                                        >a IA organiza, mas o aprendizado
+                                        continua sendo seu.</span
+                                    >
+                                </li>
+                            </ul>
+
+                            <p class="fineprint">
+                                Microcopy sugerida: ao tocar em
+                                <strong>[BAIXAR]</strong>, mostre “<strong
+                                    >Carregando…</strong
+                                >
+                                preparando seu acesso”. Se o link ainda não
+                                existir, você pode trocar por “<strong
+                                    >Entrar na lista</strong
+                                >” e capturar e-mail.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h3>FAQ rápido</h3>
+
+                            <details>
+                                <summary>Isso serve só para concurso?</summary>
+                                <p class="faq-p">
+                                    Não. Serve para qualquer estudo que dependa
+                                    de memória: faculdade, programação, idiomas
+                                    e certificações.
+                                </p>
+                            </details>
+
+                            <details>
+                                <summary>A IA faz tudo por mim?</summary>
+                                <p class="faq-p">
+                                    Ela ajuda a organizar o caminho e sugerir
+                                    estruturas. Você continua pesquisando e
+                                    construindo entendimento.
+                                </p>
+                            </details>
+
+                            <details>
+                                <summary>
+                                    Preciso estudar horas por dia?
+                                </summary>
+                                <p class="faq-p">
+                                    A proposta é consistência. Missões são
+                                    pensadas para caber na rotina e ajustar o
+                                    esforço conforme seu desempenho.
+                                </p>
+                            </details>
+
+                            <p class="fineprint" style="margin-bottom: 0">
+                                Método criado por
+                                <strong>João Zamonelo</strong> para fortalecer
+                                autodidatismo com feedback objetivo.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <script>
+            // UX + performance:
+            // - Player só carrega quando o usuário pede (lazy).
+            // - Troque VIDEO_URL pelo seu embed (YouTube/Vimeo) ou arquivo mp4 otimizado.
+            (function () {
+                const playBtn = document.getElementById("playBtn");
+                const videoBox = document.getElementById("videoBox");
+                const status = document.getElementById("videoStatus");
+
+                function loadVideo() {
+                    status.textContent = "Carregando vídeo…";
+
+                    // Opção A (recomendada para performance): iframe sob demanda
+                    // Troque VIDEO_URL abaixo por algo real quando tiver:
+                    const VIDEO_URL = "[COLE_AQUI_O_LINK_DO_VIDEO]";
+
+                    const iframe = document.createElement("iframe");
+                    iframe.setAttribute("title", "Demo do [ZAMO - FLASHCARDS]");
+                    iframe.setAttribute("loading", "lazy");
+                    iframe.setAttribute(
+                        "referrerpolicy",
+                        "strict-origin-when-cross-origin",
+                    );
+                    iframe.setAttribute(
+                        "allow",
+                        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+                    );
+                    iframe.setAttribute("allowfullscreen", "");
+                    iframe.style.width = "100%";
+                    iframe.style.height = "100%";
+                    iframe.style.border = "0";
+                    iframe.src = VIDEO_URL;
+
+                    // Remove botão e injeta o player
+                    videoBox.innerHTML = "";
+                    videoBox.appendChild(iframe);
+
+                    status.textContent = "Vídeo carregado.";
+                }
+
+                if (playBtn) {
+                    playBtn.addEventListener("click", loadVideo, {
+                        passive: true,
+                    });
+                }
+
+                // Microcopy de loading nos CTAs (evita clique duplo e comunica ação)
+                document.querySelectorAll("a[data-cta]").forEach((a) => {
+                    a.addEventListener("click", (e) => {
+                        // Se o link ainda for placeholder, evita navegação
+                        if (a.getAttribute("href") === "[NAO TENHO AINDA]") {
+                            e.preventDefault();
+                            a.setAttribute("aria-busy", "true");
+                            const label = a.querySelector(".label span");
+                            if (label) label.textContent = "Carregando…";
+                            setTimeout(() => {
+                                a.setAttribute("aria-busy", "false");
+                                if (label) label.textContent = "[BAIXAR]";
+                                alert(
+                                    "Link ainda não configurado: [NAO TENHO AINDA]. Troque pelo link real quando tiver.",
+                                );
+                            }, 700);
+                        }
+                    });
+                });
+            })();
+        </script>
+    </body>
+</html>

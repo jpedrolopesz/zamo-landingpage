@@ -254,57 +254,105 @@ export default function Home() {
 
   return (
     <>
-      <nav className="nav">
-        <div className="logo">
-          <span>Site Logo</span>
+      <nav className="nav-bodak">
+        <a className="logo-pill" href="#">
+          TODO: Site Logo
+        </a>
+
+        <div className="nav-pills">
+          <a className="nav-pill is-active" href="#hoje">
+            Home
+          </a>
+          <a className="nav-pill" href="#process">
+            TODO
+          </a>
+          <a className="nav-pill" href="#preco">
+            TODO
+          </a>
         </div>
-        <div className="menu-btn">
-          <span>Menu</span>
-        </div>
+
+        <a className="nav-pill nav-pill--right" href="#feed">
+          Feed
+        </a>
       </nav>
 
-      <section className="hero">
-        <div className="hero-cards">
-          <div className="card" id="hero-card-1">
-            <div className="card-title">
-              <span>Plan</span>
-              <span>01</span>
+      <section className="hero-bodak">
+        <div className="hero-main">
+          {/* TÍTULO GIGANTE */}
+          <h1 className="hero-title-xl">
+            FLASHCARDS <span className="title-muted">APP</span>
+          </h1>
+
+          {/* CARDS CENTRALIZADOS (usa seus cards) */}
+          <div className="bodak-cards" id="plans">
+            <div className="card mini-card mini-1" id="hero-card-1">
+              <div className="mini-top">
+                <span>Plan</span>
+                <span>01</span>
+              </div>
+              <div /> {/* espaço do meio (ícone/pixel etc se quiser) */}
+              <div className="mini-bottom">
+                <span>01</span>
+                <span>Plan</span>
+              </div>
             </div>
-            <div className="card-title">
-              <span>01</span>
-              <span>Plan</span>
+
+            <div className="card mini-card mini-2" id="hero-card-2">
+              <div className="mini-top">
+                <span>Plan</span>
+                <span>02</span>
+              </div>
+              <div />
+              <div className="mini-bottom">
+                <span>02</span>
+                <span>Plan</span>
+              </div>
+            </div>
+
+            <div className="card mini-card mini-3" id="hero-card-3">
+              <div className="mini-top">
+                <span>Plan</span>
+                <span>03</span>
+              </div>
+              <div />
+              <div className="mini-bottom">
+                <span>03</span>
+                <span>Plan</span>
+              </div>
             </div>
           </div>
-          <div className="card" id="hero-card-2">
-            <div className="card-title">
-              <span>Plan</span>
-              <span>02</span>
-            </div>
-            <div className="card-title">
-              <span>02</span>
-              <span>Plan</span>
-            </div>
-          </div>
-          <div className="card" id="hero-card-3">
-            <div className="card-title">
-              <span>Plan</span>
-              <span>03</span>
-            </div>
-            <div className="card-title">
-              <span>03</span>
-              <span>Plan</span>
+        </div>
+
+        {/* “FOOTER” DO HERO (texto/cta embaixo, igual referência) */}
+        <div className="hero-footer">
+          <div className="hero-footer-left">
+            <span className="price-pill">GRÁTIS - PRO / MÊS $19,90</span>
+
+            <p className="hero-lead">
+              Aprenda mais rápido e retenha conhecimento por mais tempo com um
+              plano de estudos personalizado por IA e repetição espaçada.{" "}
+              <span className="muted">Sem enrolação • foco no essencial</span>
+            </p>
+
+            <div className="hero-actions">
+              <a className="btn btn-primary" href="#plans">
+                Baixar grátis na App Store
+              </a>
+              <a className="btn btn-secondary" href="#services">
+                Ver detalhes
+              </a>
             </div>
           </div>
         </div>
       </section>
 
       <section className="about">
-        <h1>Keep scrolling - it gets good</h1>
+        <h1>TODO: COLOCAR VIDEO AQUI</h1>
       </section>
 
       <section className="services">
         <div className="services-header">
-          <h1>Stuff I make so you don&apos;t have to</h1>
+          <h1>TODO: AS FUNCIONALIDADES</h1>
         </div>
       </section>
 
