@@ -173,6 +173,7 @@ section {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .btn {
@@ -397,14 +398,10 @@ section {
 /* footer do hero */
 .hero-footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-end;
     gap: 2rem;
     padding-top: 2rem;
-}
-
-.hero-footer-left {
-    max-width: 720px;
 }
 
 .price-pill {
@@ -419,22 +416,18 @@ section {
     margin-bottom: 0.85rem;
 }
 
-.hero-lead {
-    font-size: clamp(1.1rem, 1.6vw, 1.75rem);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-}
-
 .muted {
-    color: rgba(0, 0, 0, 0.35);
+    color: rgba(1, 0, 0, 0.35);
     font-weight: 500;
+    font-size: clamp(1rem, 1.4vw, 1.35rem);
+    line-height: 1.4;
 }
 
 /* responsivo */
 @media (max-width: 768px) {
     .hero-footer {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
     }
     .bodak-cards {
         flex-wrap: wrap;
@@ -515,14 +508,20 @@ section {
 /* Footer (texto esquerdo + tag direita) */
 .hero-footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: flex-end;
     gap: 2rem;
     padding-top: 2rem;
+    text-align: center;
+    width: 100%;
 }
 
 .hero-footer-left {
-    max-width: 720px;
+    width: min(900px, 100%);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .price-pill {
@@ -538,14 +537,9 @@ section {
 }
 
 .hero-lead {
-    font-size: clamp(1.2rem, 1.6vw, 1.75rem);
-    line-height: 1.2;
+    font-size: clamp(1.3rem, 2.2vw, 2.2rem);
+    line-height: 1.25;
     letter-spacing: -0.01em;
-}
-
-.muted {
-    color: rgba(0, 0, 0, 0.35);
-    font-weight: 500;
 }
 
 .footer-tag {

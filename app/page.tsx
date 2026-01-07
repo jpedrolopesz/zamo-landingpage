@@ -35,7 +35,7 @@ export default function Home() {
 
     // ====== HERO ANIMATION ======
     const heroTrigger = ScrollTrigger.create({
-      trigger: ".hero",
+      trigger: ".hero-bodak",
       start: "top top",
       end: "75% top",
       scrub: 1,
@@ -48,7 +48,7 @@ export default function Home() {
           0.5,
           smoothStep(progress),
         );
-        gsap.set(".hero-cards", {
+        gsap.set(".bodak-cards", {
           opacity: heroCardsContainerOpacity,
         });
 
@@ -326,13 +326,16 @@ export default function Home() {
         {/* “FOOTER” DO HERO (texto/cta embaixo, igual referência) */}
         <div className="hero-footer">
           <div className="hero-footer-left">
-            <span className="price-pill">GRÁTIS - PRO / MÊS $19,90</span>
+            <span className="price-pill">Revisão realmente inteligente</span>
 
             <p className="hero-lead">
-              Aprenda mais rápido e retenha conhecimento por mais tempo com um
-              plano de estudos personalizado por IA e repetição espaçada.{" "}
-              <span className="muted">Sem enrolação • foco no essencial</span>
+              Pare de revisar tudo: revise só o que vai te fazer evoluir.{" "}
             </p>
+            <span className="muted">
+              Em vez de “estudar mais”, estude melhor. Flashcards adaptativos
+              organizam suas revisões para maximizar retenção e reduzir
+              esquecimento.
+            </span>
 
             <div className="hero-actions">
               <a className="btn btn-primary" href="#plans">
