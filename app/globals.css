@@ -604,6 +604,54 @@ section {
     color: var(--light);
 }
 
+.about {
+    padding: 5rem 2rem 6rem;
+    min-height: 90vh;
+}
+
+.about-content {
+    width: min(1200px, 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+}
+
+.about-kicker {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.about-heading {
+    font-size: clamp(2.2rem, 3vw, 3.4rem);
+    line-height: 1.2;
+}
+
+.about-subtitle {
+    max-width: 720px;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.about-video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.about-video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
 .services {
     padding: 8rem 2rem;
     background-color: var(--light);

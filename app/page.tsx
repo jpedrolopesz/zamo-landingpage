@@ -103,7 +103,7 @@ export default function Home() {
     const servicesPin = ScrollTrigger.create({
       trigger: ".services",
       start: "top top",
-      end: `+=${window.innerHeight * 4}`,
+      end: `+=${window.innerHeight * 1}`,
       pin: true,
       pinSpacing: true,
       markers: false, // Mude para true para debug
@@ -112,7 +112,7 @@ export default function Home() {
     const cardsVisibility = ScrollTrigger.create({
       trigger: ".services",
       start: "top top",
-      end: `+=${window.innerHeight * 4}`,
+      end: `+=${window.innerHeight * 1}`,
       onEnter: () => gsap.set(".cards", { autoAlpha: 1 }),
       onEnterBack: () => gsap.set(".cards", { autoAlpha: 1 }),
       onLeave: () => gsap.set(".cards", { autoAlpha: 0 }),
@@ -123,7 +123,7 @@ export default function Home() {
     const cardsAnimation = ScrollTrigger.create({
       trigger: ".services",
       start: "top top",
-      end: `+=${window.innerHeight * 4}`,
+      end: `+=${window.innerHeight * 1}`,
       scrub: 1,
       markers: false, // Mude para true para debug
       onUpdate: (self) => {
@@ -137,9 +137,7 @@ export default function Home() {
           smoothStep(headerProgress),
         );
 
-        gsap.set(".services-header", {
-          y: `${headerY}%`,
-        });
+        gsap.set(".services-header", { yPercent: 0 });
 
         // Animar cards
         //
@@ -279,9 +277,7 @@ export default function Home() {
       <section className="hero-bodak">
         <div className="hero-main">
           {/* TÍTULO GIGANTE */}
-          <h1 className="hero-title-xl">
-            FLASHCARDS <span className="title-muted">APP</span>
-          </h1>
+          <h1 className="hero-title-xl">FLASHCARDS</h1>
 
           {/* CARDS CENTRALIZADOS (usa seus cards) */}
           <div className="bodak-cards" id="plans">
@@ -350,7 +346,24 @@ export default function Home() {
       </section>
 
       <section className="about">
-        <h1>TODO: COLOCAR VIDEO AQUI</h1>
+        <div className="about-content">
+          <span className="about-kicker">Demonstração em vídeo</span>
+          <h2 className="about-heading">
+            Veja na prática como o Zamo acelera suas revisões
+          </h2>
+          <p className="about-subtitle">
+            Um tour rápido pela experiência de estudo inteligente — do primeiro
+            card até o lembrete ideal de revisão.
+          </p>
+          <div className="about-video">
+            <iframe
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              title="Demonstração do Zamo"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+        </div>
       </section>
 
       <section className="services">
