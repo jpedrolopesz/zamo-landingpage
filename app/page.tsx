@@ -367,12 +367,19 @@ export default function Home() {
       </section>
 
       <section className="services">
-        <div className="services-header">
-          <h1>TODO: AS FUNCIONALIDADES</h1>
-        </div>
+        <div className="services-header"></div>
       </section>
 
       <section className="cards">
+        <div className="cards-header">
+          <h2 className="about-heading">
+            Veja na prática como o Zamo acelera suas revisões
+          </h2>
+          <p className="about-subtitle">
+            Um tour rápido pela experiência de estudo inteligente — do primeiro
+            card até o lembrete ideal de revisão.
+          </p>
+        </div>
         <div className="cards-container">
           <div className="card" id="card-1">
             <div className="card-wrapper">
