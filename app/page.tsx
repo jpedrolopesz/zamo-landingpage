@@ -264,8 +264,8 @@ export default function Home() {
           <a className="nav-pill" href="#process">
             TODO
           </a>
-          <a className="nav-pill" href="#preco">
-            TODO
+          <a className="nav-pill" href="/politica-de-privacidade">
+            Privacidade
           </a>
         </div>
 
